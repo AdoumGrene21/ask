@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body class="container">
+    {% block Content %} 
+    <div class="card">
+        <div class="card-header">
+            <h4>Caisse de facturation</h4>
+        </div>
+        <blockquote class="blockquote p-0">
+          <form method="post" class="card-body ">  
+            <div class="col-md-12 list-group">
+              <div class="list-group-item list-group-item">
+                <h5 class="fs-title">Client</h5>
+                <hr>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label class="pay">Nom client</label>
+                    <input class="form-control" type="text" name="nom_client" id="nom_client" placeholder="Nom du client" />
+                  </div>
+                  <div class="col-md-4">
+                      <label class="pay">Age</label>
+                      <input class="form-control" type="number" name="age_client" id="age_client" placeholder="L'age"  />
+                  </div>
+                  <div class="col-md-4">
+                    <label class="pay">Sexe</label>
+                    <select class="form-control" id="sexe_client" name="sexe_client">
+                      <option value="masculin">M</option>
+                      <option value="feminin">F</option>
+                    </select>
+                </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </blockquote>
+
+        <blockquote class="blockquote p-0">
+          <div class="card-body p-4">
+          
+            <div class="row ">
+              <div class="col-md-4 list-group">
+
+                <div class="form-card">
+                  <input class="form-control" type="text" id="recherche_medicament" name="medicament" placeholder="Recherche le médi..."/>
+                </div>
+
+                <hr>
+                <div class="app-table">
+                  {% for medicament in medicaments %}
+                    <button class = 'list-group-item list-group-item-action' value = "{{ medicament.id }}" >
+                      {{ medicament.nom_commercial }} 
+                    </button>
+                  {% endfor %}
+                </div>
+                <div class="table-output">
+                  <div class="table-body" >  </div>
+                 
+                  <div id="medicament">  </div>
+              </div>
+       
+              </div>
+              <form method="post" class="col-md-8 list-group">
+                 <div class="list-group-item list-group-item">
+                  <fieldset>
+                    <div class="form-card">
+                        <h5 class="fs-title">Medicament</h5>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                              <label class="pay">Nom commercial</label>
+                              <input class="form-control" type="hidden" name="id_produit" id="id_produit" placeholder="" disabled />
+
+                              <input class="form-control" type="text" name="nom_commercial" id="nom_commercial" placeholder="" disabled />
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <label class="pay">Date de peremption</label>
+                                <input class="form-control" type="text" name="date_peremption" id="date_peremption" placeholder="" disabled />
+
+                            </div>
+                        </div>
+
+                        
+                        <!-- Start code not fonctionnel  -->
+                        <input class="form-control" type="hidden" id="prix_unitaire2" name="prix_unitaire2" placeholder="" disabled/>
+                        <input class="form-control" type="hidden" id="qte_approvisionner" name="qte_approvisionner" placeholder="" disabled/>
+                        <input class="form-control" type="hidden" id="qte_total" name="qte_total" placeholder="" disabled/>
+                        <!-- End code not fonctionnel  -->
+
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label class="pay">Qte demandé</label>
+                                <input class="form-control" type="text" id="qte_commande" name="qte_commande" placeholder=""/>
+                            </div>
+                            <div class="col-md-4">
+                              <label class="pay">Qte en stock</label>
+                              <input class="form-control" type="text" id="quantite" name="quantite" id="quantite" placeholder="" disabled />
+                            </div>
+                            <div class="col-md-4">
+                              <label class="pay">Prix Unitaire</label>
+                              <input class="form-control" type="text" name="prix_unitaire" id="prix_unitaire" placeholder="" disabled />
+                            </div>
+                            
+                        </div>
+                    </div>
+                  </fieldset>
+
+                  <fieldset>
+                      <div class="form-card">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <input type="button" id="ajouter"  name="ajouter" class="btn btn-primary m-1 mt-4" value="Plus (+)" onclick="plus_com()" />
+                            <input type="button" name="valider" class="btn btn-success m-1 mt-4" value="Valider" onclick="facturer()" />
+                            <input  type="hidden" name="chaine_com" id="chaine_com" placeholder="" disabled />
+                            <input  type="hidden" name="total_com" id="total_com" placeholder="" disabled />
+                          </div>
+
+                          <div class="col-md-8">
+                            <label class="pay">Somme total</label>
+                              <input class="form-control" type="text" id="total_commande" name="total_commande" placeholder="" value="0" disabled/>
+                          </div>
+                        </div>
+                      </div>              
+                  </fieldset>
+                </div>
+              </form>
+            </div>
+
+            <div class="row">
+              
+              <div class="col-md-4 list-group">
+               
+               
+              </div>
+
+
+              <div class="col-md-8 list-group bg-light">
+                 <div class="list-group-item list-group-item">
+                  <div class="row">
+                    <div class="col-md-12 list-group">
+                      <div style="float:left;width:10%;height:25px;"></div>
+                      <div style="float:left;width:80%;height:auto;text-align:center;">
+                        <div class="titre_h1" style="float:left;height:auto;width:100%;">
+                          <div style="float:left;width:5%;height:25px;"></div>
+                          <div style="width:15%;height:25px;float:left;font-size:16px;font-weight:bold;text-align:left;">
+                            Réf.
+                          </div>
+                          <div style="width:15%;height:25px;float:left;font-size:16px;font-weight:bold;text-align:left;">
+                            Qté
+                          </div>
+                          <div style="width:30%;height:25px;float:left;font-size:16px;font-weight:bold;text-align:left;overflow:hidden;">
+                            Désignation du produit
+                          </div>
+                          <div style="width:15%;height:25px;float:left;font-size:16px;font-weight:bold;text-align:right;">
+                            PUHT
+                          </div>
+                          <div style="width:15%;height:25px;float:left;font-size:16px;font-weight:bold;text-align:right;">
+                            PTHT
+                          </div>
+                          <div style="float:left;width:5%;height:25px;"></div>
+                          
+                          <div style="float:left;width:100%;height:auto;" id="det_com">
+                            						
+                            
+                          </div>				
+                          
+                        </div>
+                      </div>
+                        
+                    </div>
+                     
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </blockquote>
+    </div>
+    {% endblock Content %}
+  
+</body>

@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
+
+<body>
+  {% block Content %} 
+        <div class="card" id="app">
+          <div class="card-header">
+            <h4> Approvisionnement</h4>
+          </div>
+          <div class="card-body">
+            <blockquote class="blockquote p-0">
+              <div class="card-body p-4">
+                <div class="row ">
+                  <div class="col-md-4 list-group">
+                    <div class="form-card">
+                      <input class="form-control" type="text" id="search_text" name="search_text" placeholder="Recherche le médi..."/>
+                    </div>
+                    <hr>
+                    <div class="app-table">
+                          {% for medicament in medicaments %}
+                            <button class = 'list-group-item list-group-item-action' value = "{{ medicament.id }}" >
+                              {{ medicament.nom_commercial }} 
+                            </button>
+                          {% endfor %}
+                    </div>
+                   
+                    <div class="table-output">
+                        <div class="table-body" >  </div>
+                       
+                        <div id="medicament">  </div>
+                    </div>
+                  </div>
+                  <div class="col-md-8">
+                    <div class="">
+                      <fieldset>
+                        <form class="form-card" method="post">
+                            <h5 class="fs-title">Medicament</h5>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <label class="pay">Nom commercial</label>
+                                  <input class="form-control" type="hidden" name="id_produit" id="id_produit" placeholder="" disabled />
+    
+                                  <input class="form-control" type="text" name="nom_commercial" id="nom_commercial" placeholder="" disabled />
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="pay">Date de peremption</label>
+                                    <input class="form-control" type="text" name="date_peremption" id="date_peremption" placeholder="" />
+    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="pay">Qte à approvisionner</label>
+                                    <input class="form-control" type="text" id="qte_approvisionner" name="qte_approvisionner" placeholder="Number"/>
+                                </div>
+                                <div class="col-md-4">
+                                  <label class="pay">Qte en stock</label>
+                                  <input class="form-control" type="text" id="quantite" name="quantite" id="quantite" placeholder="" disabled />
+                                </div>
+                                <div class="col-md-4">
+                                  <label class="pay">Prix Unitaire</label>
+                                  <input class="form-control" type="text" name="prix_unitaire" id="prix_unitaire" placeholder="" disabled />
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                              <div class="col-md-8">
+                                  <label class="pay">Qte total aprés mise à jour</label>
+                                  <input class="form-control" type="text" id="qte_total" name="qte_total" placeholder="" disabled/>
+                              </div>
+
+                              <div class="col-md-4">
+                                <label class="pay">Nouveau prix unitaire</label>
+                                <input class="form-control" type="text" name="prix_unitaire2" id="prix_unitaire2" placeholder="Number" />
+                              </div>
+                          </div>
+                          <br>
+                          <div class="row">
+                            <div class="col-md-8">
+                                <input class="btn btn-primary" type="button" id="submit" value="Valider" />
+                            </div>
+                        </div>
+                      </form>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div> 
+              </div>
+            </blockquote>
+          </div>
+        </div> 
+  {% endblock Content %} 
+  
+</body>

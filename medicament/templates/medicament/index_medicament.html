@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+</head>
+
+<body class="">
+    {% block Content %}  
+    <div class="card">
+        <div class="card-header">
+          <h4> Medicaments</h4>
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-2">
+            <p>
+              <div class="list-group">
+                {% for medicament  in  medicaments %}
+                <a href="{% url 'medicament-detail' medicament.id %}" class="list-group-item list-group-item-action"> <b>{{medicament.nom_commercial}}</b> (<i>{{medicament.dci.nom}}</i>)</a>
+                {% endfor  %}
+              </div>
+          </p>
+            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+          </blockquote>
+        </div>
+    </div> 
+    {% endblock Content %}
+   
+</body>
