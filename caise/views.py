@@ -1,10 +1,17 @@
+import datetime
 from pprint import pprint
 from django.shortcuts import render
 from medicament.models import Categorie,SousCategorie, Dci,Medicament
 from caise.models import Patient, Commande, Detail_Ord
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 import json
 from django.db.models import F
+
+from django.template.loader import render_to_string
+from weasyprint import HTML
+import tempfile
+from django.db.models import Sum
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -71,8 +78,47 @@ def get_json_facture(request):
             obj_medica.quantite = F('quantite') - ligne_com[1]
             obj_medica.save()
 
+            
+
     return JsonResponse({'data':ligne_com})
+
+
+def commande_client(request):
+
+    commandes = Commande.objects.all().order_by('-id')
+    paginator = Paginator(commandes, 10)
+    page_number = request.GET.get('page')
+    page_obj = Paginator.get_page(paginator, page_number)
+    return render(request, 'caise/commande_client.html',{
+		'commandes':commandes,
+        'page_obj' : page_obj,
+	})
+
         
+
+def export_facture_pdf(request,commande_id):
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] =  'attachment; filename=Facture' + \
+        str(datetime.datetime.now())+'.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+
+    commande = Commande.objects.get(pk=commande_id)
+    detail_com = Detail_Ord.objects.filter(commande=commande_id)
+
+    html_string = render_to_string(
+        'caise/facture_pdf_output.html', {'detail_com':detail_com, 'commande':commande, 'total':0})
+    html = HTML(string=html_string)
+
+    result = html.write_pdf()
+
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(result)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response
     
 
     

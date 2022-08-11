@@ -17,50 +17,137 @@
         </div>
         <div class="card-body">
           <blockquote class="blockquote mb-2">
-          <div class="col-md-4">
-            <canvas id="myChart" width="400" height="400"></canvas>
-            <script>
-            const ctx = document.getElementById('myChart').getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: [{% for medicament in medicaments %}'{{ medicament.nom_commercial }}',{% endfor %} ],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [{% for medicament in medicaments %}'{{ medicament.quantite }}',{% endfor %}],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card" style="width: 21rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">{{nbr_med }} </h5>
+                          <h6 class="card-subtitle mb-2 text-muted">medicaments</h6>
+                         
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-3">
+                      <div class="card" style="width: 21rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ nbr_client }} </h5>
+                          <h6 class="card-subtitle mb-2 text-muted">clients</h6>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-3">
+                      <div class="card" style="width: 21rem;">
+                        <div class="card-body">
+                          <h5 class="card-title">{{ nbr_four }} </h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Fournisseur</h6>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-md-3">
+                      <div class="card" style="width: 21rem;">
+                        <div class="card-body">
+                          <h5 class="card-title"> {{ nbr_cmd }}</h5>
+                          <h6 class="card-subtitle mb-2 text-muted">Commandes</h6>
+                        </div>
+                      </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+              <div class="col-md-4">
+                    <canvas id="myChart"></canvas>
+                <script>
+                    const ctx = document.getElementById('myChart').getContext('2d');
+
+                const myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: [{% for medicament in medicaments %}'{{ medicament.nom_commercial }}',{% endfor %} ],
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [{% for medicament in medicaments %}'{{ medicament.quantite }}',{% endfor %}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
+                });
             </script>
-            </div>
-            <footer class="blockquote-footer mt-3">Someone famous in <cite title="Source Title">Source Title</cite></footer>
-          </blockquote>
         </div>
-    </div> 
+
+
+        <div class="col-md-4">
+          <canvas id="myChart1" style="height: 121rem;" ></canvas>
+          <script>
+            const ctx1 = document.getElementById('myChart1').getContext('2d');
+
+        const myChart1 = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: [{% for medicament in medicaments %}'{{ medicament.nom_commercial }}',{% endfor %} ],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [{% for medicament in medicaments %}'{{ medicament.quantite }}',{% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+              indexAxis: 'y',
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+        </div>
+        <div class="col-md-4">
+             </div>
+        
+        
+        <footer class="blockquote-footer mt-3">Copyright &copy;<cite title="Source Title">Adoum A. Grene & Djalabi M. Abakar</cite></footer>
+        </div>
+        </blockquote>
+    </div>
+</div> 
     {% endblock Content %}
-   
+    
 </body>

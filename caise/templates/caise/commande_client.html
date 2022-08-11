@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+</head>
+
+<body class="">
+    {% block Content %}  
+    <div class="card">
+        <div class="card-header">
+          <h4> Commandes des clientes</h4>
+        </div>
+        <div class="card-body">
+          <blockquote class="blockquote mb-2">
+              <div class="list-group">
+                {% for commande  in  page_obj %} 
+                <a href="{% url 'export-facture-pdf' commande.id %}" class="list-group-item list-group-item-action"><b style="margin-right:20px;" >{{commande.id}}</b>  <b>{{commande.patient.nom}}</b> (<i>{{commande.montant}}</i>)</a>
+                {% endfor  %}
+              </div>
+            <footer class="blockquote-footer">
+              <div class="row">
+                <p class="col-md-9"><b> Voir page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</b></p>
+                <div class="col-md-3">
+                <ul class="pagination align-right float-right mr-auto">
+                  {% if page_obj.has_previous %}
+                    <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}>
+                      <a class="page-link" href="?page=1">&laquo; 1</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev </a>
+                    </li>
+                  {% endif %}
+
+                  {% if page_obj.has_next %}
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo; </a>
+                    </li>
+                  {% endif %}
+                </ul>
+                </div> 
+              </div>
+            </footer>
+          </blockquote>
+        </div>
+    </div> 
+    {% endblock Content %}
+   
+</body>

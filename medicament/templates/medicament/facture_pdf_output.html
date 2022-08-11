@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <h2 style="text-align: center;"> Facture</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <span class="icon">Nom : {{ commande.patient.nom }}</span>
+        </div>
+    
+        <div class="col-md-2">
+            <span class="icon">Age : {{ commande.patient.age }} an(s)</span>
+
+        </div>
+        <div class="col-md-2">
+            <span class="icon">Sexe : {{ commande.patient.sexe }}</span>
+
+        </div>
+    </div>
+  
+
+    <table class="table">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col"> Qte</th>
+            <th scope="col">Designation</th>
+            <th style="text-align: right;" scope="col"> Prix unitaire</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for det_com in detail_com %}
+          <tr>
+            <td scope="row">{{ det_com.medicament.id }}</td>
+            <td>{{ det_com.qte }}</td>
+            <td>{{ det_com.medicament.nom_commercial }}</td>
+            <td style="text-align: right;">{{ det_com.medicament.prix_unitaire }}</td>
+          </tr>
+        {% endfor %}
+          <tr>
+            <hr/>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td style="text-align: right;" colspan="3">{{ commande.montant|floatformat:2 }}</td>
+          </tr>
+        </tbody>
+    </table>
+
+  
+    
+
+   
+
+   
+      
+  
+</body>

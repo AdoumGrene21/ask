@@ -26,6 +26,10 @@ urlpatterns = [
     #get-search-med-json
 
     path('facture-json', csrf_exempt(views.get_json_facture), name='chaine-json'),
+    path('export-facture-pdf/<commande_id>', views.export_facture_pdf, name='export-facture-pdf'),
+    path('commande-client', views.commande_client, name='commande-client'),
+
+
 
     
 ]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

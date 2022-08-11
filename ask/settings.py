@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'caise',
     'utilisateur',
     'approvision',
+    
 ]
 
 MIDDLEWARE = [
@@ -131,9 +133,9 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATICFILES_DIRS = [ 
-    BASE_DIR / "static",
+    BASE_DIR / "static/",
     ]
 
 MEDIA_URL = '/media/'

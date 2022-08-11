@@ -137,6 +137,12 @@ function reloadMedSelectionner() {
             $dateperemption = $('#date_peremption').val()
             $prixunitaire = $('#prix_unitaire2').val()
             $qte = $('#qte_total').val()
+
+            $qteapprovisionner = $('#qte_approvisionner').val()
+            $fournisseur = $('#fournisseur').val()
+
+            
+            
     
             const id = $id_produit
             
@@ -151,6 +157,10 @@ function reloadMedSelectionner() {
                         dateperemption : $dateperemption,
                         prixunitaire : $prixunitaire,
                         qte : $qte,
+
+                        qteapprovisionner : $qteapprovisionner,
+                        fournisseur : $fournisseur,
+
                     },
                     success: function(){
                         alert("save success!");
@@ -254,10 +264,24 @@ function facture()
             document.getElementById("det_com").innerHTML += "<div class='des'> "+ ligne_com[2] +"</div>";
             document.getElementById("det_com").innerHTML += "<div class='prix'> "+ ligne_com[3] +"</div>";
             document.getElementById("det_com").innerHTML += "<div class='prix'> "+  (ligne_com[1]*ligne_com[3]).toFixed(2) +"</div>";
-            document.getElementById("det_com").innerHTML += "<div class='bord'></div>";
+            document.getElementById("det_com").innerHTML += "<div class='bord'><input type='button' value='X' style='margin-left:50px; background-color:brown; font-size:12px; height:20px;' onclick='sup_com(\""+ tab_com[ligne]+"\");'></div>";
+
 
         }
     }		
+}
+
+
+function sup_com(ligne_s)
+{
+    chaine_com.value = chaine_com.value.replace('|' + ligne_s, '' );
+    var tab_detail = ligne_s.split(';');
+    console.log(tab_detail)
+    total_commande.value = (total_commande.value - tab_detail[1]*tab_detail[3]).toFixed(2);
+    total_com.value = total_commande.value;
+    tot_com = total_com.value*1;
+
+    facture();
 }
 
 function facturer()
@@ -287,7 +311,7 @@ function facturer()
         },
         success: function (response) {
             resetCaise()
-            window.location = `/caise/`
+            window.location = `/caise/commande-client`
         }, error: function(error) {
             console.log(error)
         }

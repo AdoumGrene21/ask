@@ -2,14 +2,19 @@ from ast import If
 import imp
 from django.db.models import Q
 from django.shortcuts import render
-from medicament.models import Categorie,SousCategorie, Dci,Medicament
+from medicament.models import Categorie,SousCategorie, Dci,Medicament, Approvisionnement
+from approvision.models import Fournisseur
+
 from django.http import JsonResponse
 import json
 
 # Create your views here.
 def index(request):
     medicaments = Medicament.objects.all()
-    return render(request, 'approvision/index_approvision.html', {'medicaments':medicaments})
+    fournisseurs = Fournisseur.objects.all()
+
+    
+    return render(request, 'approvision/index_approvision.html', {'medicaments':medicaments, 'fournisseurs':fournisseurs})
 
 
 def get_json_search_data(request,*args, **kwargs):
@@ -40,15 +45,24 @@ def approMedicament(request):
 
     datePeremption =request.POST['dateperemption']
     prixUnitaire = request.POST['prixunitaire']
-    quantiteTotal = request.POST['qte']
+    quantiteTotal = request.POST['qte'] 
+
+    quantiteApp = request.POST['qteapprovisionner']
+    idFournisseur = request.POST['fournisseur']
+    obj_four = Fournisseur.objects.get(id=idFournisseur)
+
+
 
     obj_med = Medicament.objects.get(id=idProduit)
+    new_app = Approvisionnement(prix = prixUnitaire, quantite = quantiteApp, date_peremption = datePeremption, medicament = obj_med, fournisseur = obj_four )
 
     obj_med.date_peremption = datePeremption
     obj_med.prix_unitaire = prixUnitaire
     obj_med.quantite = quantiteTotal
 
     obj_med.save()
+    new_app.save()
+
     success = "super!"
 
     return JsonResponse({'data':success})

@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils import timezone
 
+from  approvision.models import Fournisseur
+
 # Create your models here.
 class Liste(models.Model):
     nom = models.CharField(max_length=100)
@@ -9,7 +11,6 @@ class Liste(models.Model):
     def __str__(self):
         return self.nom
 
-
 class Categorie(models.Model):
     nom = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
@@ -17,18 +18,14 @@ class Categorie(models.Model):
     def __str__(self):
         return self.nom
 
-
 class SousCategorie(models.Model):
     nom = models.CharField(max_length=100)
     description = models.TextField(null=True, blank=True)
-
     # Foreign keys
     categorie = models.ForeignKey(Categorie, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nom
-
-
 
 class Dci(models.Model):
     nom = models.CharField(max_length=100)
@@ -39,14 +36,12 @@ class Dci(models.Model):
     duree = models.CharField(max_length=250)
     precautions = models.TextField(null=True, blank=True)
     remarques = models.TextField(null=True, blank=True)
-
     # Foreign keys
     
     sous_categorie = models.ForeignKey(SousCategorie, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.nom
-
 
 class Medicament(models.Model):
     medicament_code = models.CharField(max_length=100)
@@ -55,7 +50,7 @@ class Medicament(models.Model):
     forme = models.CharField(max_length=100)
     quantite = models.IntegerField(max_length=20, null=True, blank=True)
     prix_unitaire = models.DecimalField(max_digits=7, decimal_places=2)
-    numero_lot = models.CharField(max_length=250, blank=True)
+    #numero_lot = models.CharField(max_length=250, blank=True)
     date_peremption = models.DateField(auto_now=False, auto_now_add=False)
     nom_fabricant = models.TextField(null=True, blank=True)
     addresse_fabricant = models.TextField(null=True, blank=True)
@@ -68,8 +63,17 @@ class Medicament(models.Model):
     dci = models.ForeignKey(Dci, on_delete=models.CASCADE)
 
     def __str__(self):
-        return "%s %s" % (self.nom_commercial, self.medicament_code)
+        return "%s" % (self.nom_commercial)
 
+class Approvisionnement(models.Model):
+    prix = models.CharField(max_length=100)
+    quantite = models.IntegerField(null=True, blank=True)
+    date_peremption = models.DateField(auto_now=False,null=True, auto_now_add=False)
+    date_created = models.DateField(auto_now = True)
 
+    medicament = models.ForeignKey(Medicament, null=True, on_delete=models.CASCADE)
+    fournisseur = models.ForeignKey(Fournisseur, null=True, on_delete=models.CASCADE)
+    
 
-
+    def __str__(self):
+        return "%s Q%s" % (self.medicament, self.quantite)

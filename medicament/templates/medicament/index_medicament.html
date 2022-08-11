@@ -17,14 +17,37 @@
         </div>
         <div class="card-body">
           <blockquote class="blockquote mb-2">
-            <p>
               <div class="list-group">
-                {% for medicament  in  medicaments %}
+                {% for medicament  in  page_obj %}
                 <a href="{% url 'medicament-detail' medicament.id %}" class="list-group-item list-group-item-action"> <b>{{medicament.nom_commercial}}</b> (<i>{{medicament.dci.nom}}</i>)</a>
                 {% endfor  %}
               </div>
-          </p>
-            <footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite></footer>
+            <footer class="blockquote-footer">
+              <div class="row">
+                <p class="col-md-9"><b> Voir page {{ page_obj.number }} sur {{ page_obj.paginator.num_pages }}</b></p>
+                <div class="col-md-3">
+                <ul class="pagination align-right float-right mr-auto">
+                  {% if page_obj.has_previous %}
+                    <li {% if page_obj.number == 1 %} class="page-item active" {% endif %}>
+                      <a class="page-link" href="?page=1">&laquo; 1</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev </a>
+                    </li>
+                  {% endif %}
+
+                  {% if page_obj.has_next %}
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }} &raquo; </a>
+                    </li>
+                  {% endif %}
+                </ul>
+                </div> 
+              </div>
+            </footer>
           </blockquote>
         </div>
     </div> 

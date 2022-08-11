@@ -1,21 +1,21 @@
+{% load static %}
 
-
-<nav class="navbar navbar-expand-lg navbar-light bg-success mb-4"> 
+<nav class="navbar navbar-expand-lg navbar-light bg-success text-light mb-4"> 
     <div class="container-fluid" style="height: 60px">
-      <a class="navbar-brand" href="{% url 'home-page' %}">ASK</a>
+      <a class="navbar-brand" href="{% url 'home-page' %}"><img style="weight:70px; height:70px;" src="{% static 'dashboard/logo.png' %}"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
+      <div class="collapse navbar-collapse" id="navbarNav" style="font-size:23px; font-family: helvetica,sans-serif; ">
+        <ul class="navbar-nav" >
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'medicaments' %}">Medicaments</a>
+            <a class="nav-link" href="{% url 'medicaments' %}"><span style="color:white;">Medicaments</span> </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'caise' %}">Caisse</a>
+            <a class="nav-link" href="{% url 'caise' %}"><span style="color:white;" >Caisse </span></a>
           </li>
           <li class="nav-item"> 
-            <a class="nav-link " href="{% url 'index-approvision' %}" tabindex="-1" aria-disabled="false">Approvisionnement</a>
+            <a class="nav-link " href="{% url 'index-approvision' %}" tabindex="-1" aria-disabled="false"><span style="color:white;" >Approvisionnement</span></a>
           </li>
         </ul>
         

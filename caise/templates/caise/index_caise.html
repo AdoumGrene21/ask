@@ -12,6 +12,7 @@
     <div class="card">
         <div class="card-header">
             <h4>Caisse de facturation</h4>
+            <a style="float:right; margin-top:-30px;" href="{% url 'commande-client' %}" class="btn btn-primary ">Les commande des clients</a>
         </div>
         <blockquote class="blockquote p-0">
           <form method="post" class="card-body ">  
@@ -119,6 +120,7 @@
                           <div class="col-md-4">
                             <input type="button" id="ajouter"  name="ajouter" class="btn btn-primary m-1 mt-4" value="Plus (+)" onclick="plus_com()" />
                             <input type="button" name="valider" class="btn btn-success m-1 mt-4" value="Valider" onclick="facturer()" />
+
                             <input  type="hidden" name="chaine_com" id="chaine_com" placeholder="" disabled />
                             <input  type="hidden" name="total_com" id="total_com" placeholder="" disabled />
                           </div>
